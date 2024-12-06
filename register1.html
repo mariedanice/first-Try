@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("bg2.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 10px 5px 5px 20px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 35px;
+            width: 700px;
+        }
+
+        .main h2 {
+            margin-top: -3px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .main h4 {
+            color: #0d9144;
+            margin-top: -5px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #004d00;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color : rgb(230, 230, 230, 0.7);
+        }
+
+        input[type="submit"],
+        input[type="reset"] {
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background-color: #008000;
+            color: white;
+            cursor: pointer;
+            width: 45%;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        input[type="submit"]:hover,
+        input[type="reset"]:hover {
+            background-color: #514ca6;
+        }
+    </style>
+
+    <script>
+        
+        // Function to validate the form inputs
+        function validateForm() {
+            const studNum = document.getElementById('stud_num').value;
+            const course = document.getElementById('course').value;
+            const firstName = document.getElementById('first').value;
+            const lastName = document.getElementById('last').value;
+            const mobile = document.getElementById('mobile').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Validate Student Number (must be exactly 9 digits)
+            if (!/^\d{9}$/.test(studNum)) {
+                alert("Student Number must be exactly 9 digits!");
+                return false;
+            }
+
+            // Validate Program (not empty)
+            if (course === '') {
+                alert("Program is required!");
+                return false;
+            }
+
+            // Validate First Name (not empty)
+            if (firstName === '') {
+                alert("First Name is required!");
+                return false;
+            }
+
+            // Validate Last Name (not empty)
+            if (lastName === '') {
+                alert("Last Name is required!");
+                return false;
+            }
+
+            // Validate Main Phone Number (must be 11 digits)
+            if (!/^\d{11}$/.test(mobile)) {
+                alert("Main Phone Number must be 11 digits!");
+                return false;
+            }
+
+            // Validate Email Address (basic email format)
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address!");
+                return false;
+            }
+
+            // Validate Password (minimum 6 characters)
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long!");
+                return false;
+            }
+
+            // If validation passes, show success message
+            alert("Registration successful!");
+            return true;
+        }
+
+        // Function to auto-fill the registration date field
+        function setRegistrationDate() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+            const dd = String(today.getDate()).padStart(2, '0');
+            const formattedDate = yyyy + '/' + mm + '/' + dd;
+            document.getElementById('registrationDate').value = formattedDate;
+        }
+
+        // Run setRegistrationDate when the page loads
+        window.onload = setRegistrationDate;
+        
+    </script>
+</head>
+<body>
+    <div class="bg-image">
+        <h4 style="text-align: center;">Marie Danice G. Tio - BSIT 4-1</h4>
+    <div class="main">
+        <h2>Registration Form</h2>
+        <form id="registrationForm" action="http://10.10.139.82:8000/api/patrons" method="POST" onsubmit="return validateForm()" class="form">
+            <label for="stud_num">Student Number:</label> 
+            <input type="text" id="stud_num" name="stud_num" maxlength="9" required />
+
+            <label for="course">Course / Program:</label>
+            <input type="text" id="course" name="course" required />
+
+            <label for="first">First Name:</label>
+            <input type="text" id="first" name="first" required />
+
+            <label for="last">Last Name:</label>
+            <input type="text" id="last" name="last" required />
+
+            <label for="birthday">Birthday:</label>
+            <input type="date" id="birthday" name="birthday" />
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Others</option>
+                <option value="notspecific">Not Specified</option>
+            </select>
+
+            <!--<label for="address">Address:</label>*/
+            <textarea id="address" name="address" cols="86" rows="5" required></textarea>-->
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required />
+
+            <label for="province">Province:</label>
+            <input type="text" id="province" name="province" required />
+
+            <label for="zip">ZipCode:</label>
+            <input type="text" id="zip" name="zip" required /><hr>
+
+            <h3>Contact Info</h3>
+            <label for="mobile">Main Phone Number:</label>
+            <input type="text" id="mobile" name="mobile" maxlength="11" required />
+
+            <label for="mobile2">Secondary phone number:</label>
+            <input type="text" id="mobile2" name="mobile2" maxlength="11" />
+
+            <label for="email">Main Email Address:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="email2">Secondary Email Address:</label>
+            <input type="email" id="email2" name="email2" />
+
+            <label for="cardnumber">Card Number:</label> 
+            <input type="text" id="cardnumber" name="cardnumber" maxlength="9" required />
+
+            <label for="college">College:</label>
+            <input type="text" id="college" name="college" required />
+
+            <label for="course">Course:</label>
+            <input type="text" id="course" name="course" required />
+
+            <label>Registration Date: </label>
+            <input type="text" id="registrationDate" name="registrationDate" disabled />
+            
+            <label for="expiry">Expiry Date:</label>
+            <input type="text" id="expiry" name="expiry" value="" disabled />
+
+            <input type="submit" value="Submit" />
+            <input type="reset" value="Reset" /><br />
+
+            <p>Already have an account? <a href="login.html">Login!</a></p>
+        </form>
+    </div>
+</div>
+<script src="function.js" defer></script>
+</body>
+</html>
